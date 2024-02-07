@@ -95,15 +95,15 @@ export default async function ThreeApp() {
               seed={1}
               segments={100}
               bounds={10}
-              volume={0}
-              growth={0}
+              volume={1}
+              growth={2}
               opacity={0.15}
               position={[0, 0, -10]}
               speed={0.2}
             />
           </Clouds>
           <EffectComposer disableNormalPass multisampling={4}>
-            <HueSaturation saturation={-0} />
+            <HueSaturation saturation={-100} />
             <TiltShift2 blur={40.5} />
             <DotScreen scale={11} />
           </EffectComposer>
@@ -116,7 +116,11 @@ export default async function ThreeApp() {
 
 function Loop({ factor = 0.2 }) {
   const motion = useMotion();
-  useFrame((state, delta) => (motion.current += Math.min(0.1, delta) * factor));
+  useFrame(
+    (state, delta) =>
+      (motion.current +=
+        Math.min(0.1, delta) * state.pointer.x * state.pointer.y)
+  );
 }
 
 const Sticker = forwardRef(({ url, ...props }, ref) => {
