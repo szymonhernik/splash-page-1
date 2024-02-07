@@ -1,7 +1,7 @@
 "use client";
 import * as THREE from "three";
 
-import { useRef, forwardRef, Suspense } from "react";
+import { useRef, forwardRef, Suspense, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 
 import { Perf } from "r3f-perf";
@@ -17,6 +17,9 @@ import {
   Gltf,
   Float,
   Environment,
+  AdaptiveEvents,
+  AdaptiveDpr,
+  PerformanceMonitor,
 } from "@react-three/drei";
 import {
   EffectComposer,
@@ -41,12 +44,23 @@ export default async function ThreeApp() {
   });
   const Curve = CURVES[path];
 
+  const [dpr, setDpr] = useState(2);
+
   return (
     <>
       <Canvas
+        dpr={dpr}
         camera={{ position: [10, 15, -10], fov: 45 }}
         resize={{ debounce: { scroll: 50, resize: 100 } }}
       >
+        <PerformanceMonitor
+          factor={1}
+          onChange={({ factor }) => setDpr(Math.floor(0.5 + 1.5 * factor, 1))}
+        />
+
+        <AdaptiveDpr pixelated />
+        <AdaptiveEvents />
+
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
@@ -88,9 +102,9 @@ export default async function ThreeApp() {
               speed={0.2}
             />
           </Clouds>
-          <EffectComposer disableNormalPass multisampling={2}>
+          <EffectComposer disableNormalPass multisampling={4}>
             <HueSaturation saturation={-0} />
-            <TiltShift2 blur={20.5} />
+            <TiltShift2 blur={40.5} />
             <DotScreen scale={11} />
           </EffectComposer>
           <Perf position="top-left" />
