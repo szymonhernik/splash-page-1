@@ -1,7 +1,7 @@
 "use client";
 import * as THREE from "three";
 
-import { useRef, forwardRef } from "react";
+import { useRef, forwardRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 
 import { Perf } from "r3f-perf";
@@ -27,7 +27,7 @@ import {
 import { useControls } from "leva";
 import * as CURVES from "@/app/helpers/curves";
 
-export default function ThreeApp() {
+export default async function ThreeApp() {
   const poi = useRef();
   const motionRef = useRef();
   const { float, attachCamera, debug, path } = useControls({
@@ -47,52 +47,54 @@ export default function ThreeApp() {
         camera={{ position: [10, 15, -10], fov: 45 }}
         resize={{ debounce: { scroll: 50, resize: 100 } }}
       >
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        {!attachCamera && <OrbitControls />}
-        <MotionPathControls
-          object={attachCamera ? null : motionRef}
-          focus={poi}
-          debug={debug}
-          damping={0.2}
-          focusDamping={0.15}
-        >
-          <Curve />
-          <Loop />
-        </MotionPathControls>
-        <Gltf
-          visible={!attachCamera}
-          src="/sony_cinema_camera-transformed.glb"
-          scale={0.03}
-          ref={motionRef}
-        />
-        <Float
-          floatIntensity={20}
-          rotationIntensity={25}
-          speed={float ? 0.2 : 0}
-        >
-          <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
-        </Float>
-        {/* <Environment preset="city" background blur={0.5} /> */}
-        <Clouds>
-          <Cloud
-            concentrate="outside"
-            seed={1}
-            segments={100}
-            bounds={20}
-            volume={20}
-            growth={10}
-            opacity={0.15}
-            position={[0, 0, -10]}
-            speed={0.4}
+        <Suspense fallback={null}>
+          <ambientLight />
+          <pointLight position={[10, 10, 10]} />
+          {!attachCamera && <OrbitControls />}
+          <MotionPathControls
+            object={attachCamera ? null : motionRef}
+            focus={poi}
+            debug={debug}
+            damping={0.2}
+            focusDamping={0.15}
+          >
+            <Curve />
+            <Loop />
+          </MotionPathControls>
+          <Gltf
+            visible={!attachCamera}
+            src="/sony_cinema_camera-transformed.glb"
+            scale={0.03}
+            ref={motionRef}
           />
-        </Clouds>
-        <EffectComposer disableNormalPass multisampling={4}>
-          <HueSaturation saturation={-1} />
-          <TiltShift2 blur={0.5} />
-          <DotScreen scale={2} />
-        </EffectComposer>
-        <Perf position="top-left" />
+          <Float
+            floatIntensity={20}
+            rotationIntensity={25}
+            speed={float ? 0.2 : 0}
+          >
+            <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
+          </Float>
+          {/* <Environment preset="city" background blur={0.5} /> */}
+          <Clouds>
+            <Cloud
+              concentrate="outside"
+              seed={1}
+              segments={100}
+              bounds={20}
+              volume={20}
+              growth={10}
+              opacity={0.15}
+              position={[0, 0, -10]}
+              speed={0.4}
+            />
+          </Clouds>
+          <EffectComposer disableNormalPass multisampling={4}>
+            <HueSaturation saturation={-1} />
+            <TiltShift2 blur={0.5} />
+            <DotScreen scale={2} />
+          </EffectComposer>
+          <Perf position="top-left" />
+        </Suspense>
       </Canvas>
     </>
   );

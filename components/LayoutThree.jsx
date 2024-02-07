@@ -1,9 +1,6 @@
-"use client";
 import dynamic from "next/dynamic";
-
-const ThreeApp = dynamic(() => import("./ThreeApp"), {
-  ssr: false,
-});
+import { Suspense } from "react";
+import ThreeApp from "./ThreeApp";
 
 export default function LayoutThree() {
   return <ThreeApp />;

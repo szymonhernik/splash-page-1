@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +12,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`{inter.className} h-screen flex overflow-hidden`}>
+        {children}
+        <div className="w-64 pl-8 items-center pb-16 flex bg-gray-100">
+          <ul className="text-2xl text-neutral-400  space-y-4">
+            <li className="text-neutral-600 hover:underline">
+              <Link href="browse">browse</Link>
+            </li>
+            <li>about</li>
+            <li>pricing</li>
+            <li>mentoring</li>
+            <li>discord</li>
+            <li>FAQ</li>
+          </ul>
+        </div>
+      </body>
     </html>
   );
 }

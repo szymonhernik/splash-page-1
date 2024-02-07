@@ -1,24 +1,22 @@
-import { Suspense } from "react";
-import LayoutThree from "../../components/LayoutThree";
+import dynamic from "next/dynamic";
+
+const ThreeApp = dynamic(() => import("../../components/ThreeApp"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full flex-col items-center justify-center">
+      <h1 className="animate-pulse text-black"> Loading...</h1>
+    </div>
+  ),
+});
 
 export default function Home() {
   return (
-    <div className="bg-gray-200 w-full h-screen max-h-screen flex">
-      <div className="bg-white grow h-full w-[calc(100vw-16rem)]">
-        {" "}
-        <LayoutThree />
+    <div className="bg-gray-200 flex-1 overflow-y-auto relative">
+      {" "}
+      <ThreeApp />
+      <div className="absolute bottom-16 right-16 text-black px-8 py-4 bg-white cursor-pointer">
+        <h1>Subscribe</h1>
       </div>
-      <div className="w-64 pl-8 items-center pb-16 flex">
-        <ul className="text-2xl text-gray-600  space-y-4">
-          <li>browse</li>
-          <li>about</li>
-          <li>pricing</li>
-          <li>mentoring</li>
-          <li>discord</li>
-          <li>FAQ</li>
-        </ul>
-      </div>
-      {/* <LayoutThree />; */}
     </div>
   );
 }
