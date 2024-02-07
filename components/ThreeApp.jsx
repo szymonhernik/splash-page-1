@@ -44,8 +44,8 @@ export default function ThreeApp() {
   return (
     <>
       <Canvas
-        onCreated={(state) => (state.gl.toneMapping = THREE.AgXToneMapping)}
         camera={{ position: [10, 15, -10], fov: 45 }}
+        resize={{ debounce: { scroll: 50, resize: 0 } }}
       >
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
@@ -66,10 +66,14 @@ export default function ThreeApp() {
           scale={0.03}
           ref={motionRef}
         />
-        <Float floatIntensity={20} rotationIntensity={25} speed={float ? 4 : 0}>
+        <Float
+          floatIntensity={20}
+          rotationIntensity={25}
+          speed={float ? 0.2 : 0}
+        >
           <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
         </Float>
-        <Environment preset="city" background blur={0.5} />
+        {/* <Environment preset="city" background blur={0.5} /> */}
         <Clouds>
           <Cloud
             concentrate="outside"
@@ -80,7 +84,7 @@ export default function ThreeApp() {
             growth={10}
             opacity={0.15}
             position={[0, 0, -10]}
-            speed={1}
+            speed={0.4}
           />
         </Clouds>
         <EffectComposer disableNormalPass multisampling={4}>
