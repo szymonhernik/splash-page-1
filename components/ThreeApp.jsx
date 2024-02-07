@@ -45,7 +45,7 @@ export default function ThreeApp() {
     <>
       <Canvas
         camera={{ position: [10, 15, -10], fov: 45 }}
-        resize={{ debounce: { scroll: 50, resize: 0 } }}
+        resize={{ debounce: { scroll: 50, resize: 100 } }}
       >
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
