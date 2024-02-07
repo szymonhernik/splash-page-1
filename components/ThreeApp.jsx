@@ -88,7 +88,7 @@ export default function ThreeApp() {
           <TiltShift2 blur={0.5} />
           <DotScreen scale={2} />
         </EffectComposer>
-        <Perf />
+        <Perf position="top-left" />
       </Canvas>
     </>
   );
