@@ -62,7 +62,7 @@ export default async function ThreeApp() {
             <Loop />
           </MotionPathControls>
           <Gltf
-            visible={!attachCamera}
+            visible={false}
             src="/sony_cinema_camera-transformed.glb"
             scale={0.03}
             ref={motionRef}
@@ -74,24 +74,24 @@ export default async function ThreeApp() {
           >
             <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
           </Float>
-          {/* <Environment preset="city" background blur={0.5} /> */}
+          <Environment preset="city" background blur={0.5} />
           <Clouds>
             <Cloud
               concentrate="outside"
               seed={1}
               segments={100}
-              bounds={20}
-              volume={20}
-              growth={10}
+              bounds={10}
+              volume={0}
+              growth={0}
               opacity={0.15}
               position={[0, 0, -10]}
-              speed={0.4}
+              speed={0.2}
             />
           </Clouds>
-          <EffectComposer disableNormalPass multisampling={4}>
-            <HueSaturation saturation={-1} />
-            <TiltShift2 blur={0.5} />
-            <DotScreen scale={2} />
+          <EffectComposer disableNormalPass multisampling={2}>
+            <HueSaturation saturation={-0} />
+            <TiltShift2 blur={20.5} />
+            <DotScreen scale={11} />
           </EffectComposer>
           <Perf position="top-left" />
         </Suspense>
