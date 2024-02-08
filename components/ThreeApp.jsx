@@ -114,7 +114,7 @@ export default async function ThreeApp() {
   );
 }
 
-function Loop({ factor = 0.2 }) {
+function Loop({ factor = 0.3 }) {
   const motion = useMotion();
   useFrame(
     (state, delta) =>
