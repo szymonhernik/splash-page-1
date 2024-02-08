@@ -20,12 +20,17 @@ import {
   AdaptiveEvents,
   AdaptiveDpr,
   PerformanceMonitor,
+  Html,
 } from "@react-three/drei";
 import {
   EffectComposer,
   TiltShift2,
   HueSaturation,
   DotScreen,
+  DepthOfField,
+  Bloom,
+  Noise,
+  Vignette,
 } from "@react-three/postprocessing";
 import { useControls } from "leva";
 import * as CURVES from "@/app/helpers/curves";
@@ -64,13 +69,15 @@ export default async function ThreeApp() {
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
+
           {!attachCamera && <OrbitControls />}
+
           <MotionPathControls
             object={attachCamera ? null : motionRef}
             focus={poi}
             debug={debug}
             damping={0.2}
-            focusDamping={0.15}
+            focusDamping={0.9}
           >
             <Curve />
             <Loop />
@@ -88,6 +95,7 @@ export default async function ThreeApp() {
           >
             <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
           </Float>
+
           <Environment preset="city" background blur={0.5} />
           {/* <Clouds>
             <Cloud
@@ -102,11 +110,17 @@ export default async function ThreeApp() {
               speed={0.2}
             />
           </Clouds> */}
+
           <EffectComposer disableNormalPass multisampling={4}>
             <HueSaturation saturation={-0} />
+            <Vignette eskil={false} offset={0.1} darkness={0.6} />
+
             <TiltShift2 blur={40.5} />
+
             <DotScreen scale={22} />
+            {/* <Noise opacity={0.025} /> */}
           </EffectComposer>
+          {/* <TextLC position={[1, 0, 2]} scale={4} ref={poi} /> */}
           <Perf position="top-left" />
         </Suspense>
       </Canvas>
