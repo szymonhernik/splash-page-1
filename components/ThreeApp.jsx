@@ -103,7 +103,7 @@ export default async function ThreeApp() {
             />
           </Clouds> */}
           <EffectComposer disableNormalPass multisampling={4}>
-            <HueSaturation saturation={-2} />
+            <HueSaturation saturation={-0} />
             <TiltShift2 blur={40.5} />
             <DotScreen scale={22} />
           </EffectComposer>
@@ -114,12 +114,12 @@ export default async function ThreeApp() {
   );
 }
 
-function Loop({ factor = 0.3 }) {
+function Loop({ factor = 0.4 }) {
   const motion = useMotion();
   useFrame(
     (state, delta) =>
       (motion.current +=
-        Math.min(0.1, delta) * state.pointer.x * state.pointer.x * 0.6)
+        Math.min(0.1, delta) * state.pointer.x * state.pointer.y * 0.4)
   );
 }
 
