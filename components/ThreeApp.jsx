@@ -20,22 +20,17 @@ import {
   AdaptiveEvents,
   AdaptiveDpr,
   PerformanceMonitor,
-  Html,
 } from "@react-three/drei";
 import {
   EffectComposer,
   TiltShift2,
   HueSaturation,
   DotScreen,
-  DepthOfField,
-  Bloom,
-  Noise,
-  Vignette,
 } from "@react-three/postprocessing";
 import { useControls } from "leva";
 import * as CURVES from "@/app/helpers/curves";
 
-export default function ThreeApp() {
+export default async function ThreeApp() {
   const poi = useRef();
   const motionRef = useRef();
   const { float, attachCamera, debug, path } = useControls({
@@ -69,15 +64,13 @@ export default function ThreeApp() {
         <Suspense fallback={null}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
-
           {!attachCamera && <OrbitControls />}
-
           <MotionPathControls
             object={attachCamera ? null : motionRef}
             focus={poi}
             debug={debug}
             damping={0.2}
-            focusDamping={0.9}
+            focusDamping={0.15}
           >
             <Curve />
             <Loop />
@@ -95,9 +88,8 @@ export default function ThreeApp() {
           >
             <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
           </Float>
-
           <Environment preset="city" background blur={0.5} />
-          {/* <Clouds>
+          <Clouds>
             <Cloud
               concentrate="outside"
               seed={1}
@@ -109,18 +101,12 @@ export default function ThreeApp() {
               position={[0, 0, -10]}
               speed={0.2}
             />
-          </Clouds> */}
-
+          </Clouds>
           <EffectComposer disableNormalPass multisampling={4}>
-            <HueSaturation saturation={-0} />
-            <Vignette eskil={false} offset={0.1} darkness={0.6} />
-
+            <HueSaturation saturation={-100} />
             <TiltShift2 blur={40.5} />
-
-            <DotScreen scale={22} />
-            {/* <Noise opacity={0.025} /> */}
+            <DotScreen scale={11} />
           </EffectComposer>
-          {/* <TextLC position={[1, 0, 2]} scale={4} ref={poi} /> */}
           <Perf position="top-left" />
         </Suspense>
       </Canvas>
@@ -128,12 +114,12 @@ export default function ThreeApp() {
   );
 }
 
-export function Loop({ factor = 0.2 }) {
+function Loop({ factor = 0.2 }) {
   const motion = useMotion();
   useFrame(
     (state, delta) =>
       (motion.current +=
-        Math.min(0.1, delta) * state.pointer.x * state.pointer.y * 0.4)
+        Math.min(0.1, delta) * state.pointer.x * state.pointer.y)
   );
 }
 
@@ -162,4 +148,3 @@ const Sticker = forwardRef(({ url, ...props }, ref) => {
     </mesh>
   );
 });
-Sticker.displayName = "Sticker";
