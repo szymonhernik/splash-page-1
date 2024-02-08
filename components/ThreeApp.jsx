@@ -89,7 +89,7 @@ export default async function ThreeApp() {
             <Sticker position={[1, 0, 1]} scale={2} ref={poi} />
           </Float>
           <Environment preset="city" background blur={0.5} />
-          <Clouds>
+          {/* <Clouds>
             <Cloud
               concentrate="outside"
               seed={1}
@@ -101,11 +101,11 @@ export default async function ThreeApp() {
               position={[0, 0, -10]}
               speed={0.2}
             />
-          </Clouds>
+          </Clouds> */}
           <EffectComposer disableNormalPass multisampling={4}>
-            <HueSaturation saturation={-100} />
+            <HueSaturation saturation={-0} />
             <TiltShift2 blur={40.5} />
-            <DotScreen scale={11} />
+            <DotScreen scale={22} />
           </EffectComposer>
           <Perf position="top-left" />
         </Suspense>
@@ -119,7 +119,7 @@ function Loop({ factor = 0.2 }) {
   useFrame(
     (state, delta) =>
       (motion.current +=
-        Math.min(0.1, delta) * state.pointer.x * state.pointer.y)
+        Math.min(0.1, delta) * state.pointer.x * state.pointer.y * 0.4)
   );
 }
 
