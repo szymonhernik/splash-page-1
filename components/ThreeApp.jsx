@@ -113,7 +113,7 @@ export default async function ThreeApp() {
 
           <EffectComposer disableNormalPass multisampling={4}>
             <HueSaturation saturation={-0} />
-            <Vignette eskil={false} offset={0.1} darkness={0.6} />
+            {/* <Vignette eskil={false} offset={0.1} darkness={0.6} /> */}
 
             <TiltShift2 blur={40.5} />
 
