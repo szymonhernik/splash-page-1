@@ -35,7 +35,7 @@ import {
 import { useControls } from "leva";
 import * as CURVES from "@/app/helpers/curves";
 
-export default async function ThreeApp() {
+export default function ThreeApp() {
   const poi = useRef();
   const motionRef = useRef();
   const { float, attachCamera, debug, path } = useControls({
@@ -113,7 +113,7 @@ export default async function ThreeApp() {
 
           <EffectComposer disableNormalPass multisampling={4}>
             <HueSaturation saturation={-0} />
-            {/* <Vignette eskil={false} offset={0.1} darkness={0.6} /> */}
+            <Vignette eskil={false} offset={0.1} darkness={0.6} />
 
             <TiltShift2 blur={40.5} />
 
@@ -128,7 +128,7 @@ export default async function ThreeApp() {
   );
 }
 
-function Loop({ factor = 0.2 }) {
+export function Loop({ factor = 0.2 }) {
   const motion = useMotion();
   useFrame(
     (state, delta) =>
@@ -162,3 +162,4 @@ const Sticker = forwardRef(({ url, ...props }, ref) => {
     </mesh>
   );
 });
+Sticker.displayName = "Sticker";
